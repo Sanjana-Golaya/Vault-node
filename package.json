@@ -55,6 +55,7 @@
       },
       "scripts": {
           "dev": "vite",
-          "build": "vite build"
+          "build": "npm i",
+          "start": "npm run dev"
       }
   }
