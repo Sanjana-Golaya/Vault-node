@@ -54,6 +54,8 @@
       outDir: 'build',
     },
     server: {
+      allowedHosts : true,
+      allowedHosts : "sample-nodejs-kpvyj.ondigitalocean.app",
       port: 8080,
       open: true,
     },
