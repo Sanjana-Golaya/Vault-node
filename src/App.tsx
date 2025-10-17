@@ -8,6 +8,7 @@ import { MissionSection } from "./components/MissionSection";
 import { SupportSection } from "./components/SupportSection";
 import { VaultPage } from "./components/VaultPage";
 import { AuthDialog } from "./components/AuthDialog";
+import { CustomCursor } from "./components/CustomCursor";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<'landing' | 'vault'>('landing');
@@ -43,6 +44,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <CustomCursor />
       <Header 
         onNavigate={handleNavigate}
         onShowVault={handleShowVault}

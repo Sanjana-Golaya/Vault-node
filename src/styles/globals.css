@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Dots&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -122,10 +124,12 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    cursor: none !important;
   }
 
   body {
     @apply bg-background text-foreground;
+    cursor: none !important;
   }
 }
 

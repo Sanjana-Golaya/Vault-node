@@ -1,41 +1,7 @@
 import { motion } from "motion/react";
 import { useInView } from "motion/react";
 import { useRef } from "react";
-import { Shield, Lock, Eye, Database, Zap, Heart } from "lucide-react";
-import { Card, CardContent } from "./ui/card";
-
-const features = [
-  {
-    icon: Shield,
-    title: "Privacy First",
-    description: "Your data stays yours. We built Vault with privacy as the foundation, not an afterthought."
-  },
-  {
-    icon: Lock,
-    title: "End-to-End Encryption",
-    description: "Everything is encrypted before it leaves your device. Even we can't see your data."
-  },
-  {
-    icon: Eye,
-    title: "Zero Tracking",
-    description: "No analytics, no behavioral tracking, no data collection for advertising purposes."
-  },
-  {
-    icon: Database,
-    title: "Your Data, Your Control",
-    description: "Export, delete, or migrate your data anytime. You're never locked in."
-  },
-  {
-    icon: Zap,
-    title: "Lightning Fast",
-    description: "Built for speed and efficiency. Access your second brain instantly."
-  },
-  {
-    icon: Heart,
-    title: "Made with Care",
-    description: "Crafted by a team that believes technology should serve humanity, not exploit it."
-  }
-];
+import { NetworkVisualization } from "./NetworkVisualization";
 
 export function FeatureSection() {
   const ref = useRef(null);
@@ -50,7 +16,18 @@ export function FeatureSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
+          <h2 
+            className="text-4xl md:text-6xl font-bold mb-6"
+            style={{
+              fontFamily: "'Orbitron', sans-serif",
+              background: 'linear-gradient(180deg, #B8B8B8 0%, #E3E3E3 100%)',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              filter: 'drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25))',
+              textShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+            }}
+          >
             What We Do
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -59,26 +36,17 @@ export function FeatureSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-            >
-              <Card className="h-full hover:shadow-lg transition-shadow duration-300">
-                <CardContent className="p-8">
-                  <feature.icon className="w-12 h-12 text-primary mb-6" />
-                  <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+        {/* Network Visualization */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mb-24"
+        >
+          <div className="max-w-4xl mx-auto mb-12">
+            <NetworkVisualization />
+          </div>
+        </motion.div>
       </div>
     </section>
   );

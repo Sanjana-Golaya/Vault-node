@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "./ui/sheet";
 import { Menu } from "lucide-react";
@@ -12,17 +11,6 @@ interface HeaderProps {
 }
 
 export function Header({ onNavigate, onShowVault }: HeaderProps) {
-  const { scrollY } = useScroll();
-  
-  // Transform scroll values to animation properties
-  // Scale from 1 to 3.5 (text-2xl to roughly text-8xl equivalent)
-  const scale = useTransform(scrollY, [0, 400], [1, 3.5]);
-  
-  // Move down from 0 to center of viewport
-  const y = useTransform(scrollY, [0, 400], [0, 300]);
-  
-  // Fade out as it approaches the hero text
-  const opacity = useTransform(scrollY, [0, 300, 400], [1, 0.8, 0]);
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
 
@@ -76,18 +64,6 @@ export function Header({ onNavigate, onShowVault }: HeaderProps) {
               </div>
             </SheetContent>
           </Sheet>
-
-          {/* Center - Brand with merge animation */}
-          <motion.div 
-            className="absolute left-1/2 transform -translate-x-1/2 origin-center"
-            style={{
-              scale,
-              y,
-              opacity,
-            }}
-          >
-            <h1 className="text-2xl font-bold text-foreground whitespace-nowrap">Vault</h1>
-          </motion.div>
 
           {/* Right - Navigation */}
           <div className="flex items-center space-x-2">

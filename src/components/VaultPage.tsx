@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { ArrowLeft, Plus, Folder, FileText, Image, Link } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { CustomCursor } from "./CustomCursor";
 
 interface VaultPageProps {
   onBack: () => void;
@@ -18,6 +19,7 @@ export function VaultPage({ onBack }: VaultPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
+      <CustomCursor />
       {/* Header */}
       <header className="border-b border-border p-6">
         <div className="flex items-center justify-between">

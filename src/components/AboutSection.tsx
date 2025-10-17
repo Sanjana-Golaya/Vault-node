@@ -15,21 +15,29 @@ export function AboutSection() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-8">
+            <h2 
+              className="text-4xl md:text-6xl font-bold mb-8"
+              style={{
+                fontFamily: "'Orbitron', sans-serif",
+                background: 'linear-gradient(180deg, #B8B8B8 0%, #E3E3E3 100%)',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                filter: 'drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25))',
+                textShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+              }}
+            >
               Who We Are
             </h2>
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>
-                We're a team of privacy advocates, engineers, and designers who believe 
-                that your personal data should remain personal.
+                We're a team of engineers and designers who, like you, are drowning in the chaos of our own digital lives with endless notes, chats, files, and scattered thoughts that never seem to connect back to us.
               </p>
               <p>
-                Born out of frustration with big tech's data harvesting practices, 
-                Vault represents a new approach to digital tools—one that puts you first.
+                Vault was born out of that frustration. We believe that in an age of limitless information, what we're missing isn't more tools. It's a second mind that unifies everything you know, remember, and create.
               </p>
               <p>
-                We're not here to extract value from your data. We're here to help you 
-                extract value from your data.
+                Vault is that space: a calm, private system of recall built for people who think deeply and move fast.
               </p>
             </div>
           </motion.div>
