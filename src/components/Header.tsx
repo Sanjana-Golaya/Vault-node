@@ -4,6 +4,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from 
 import { Menu } from "lucide-react";
 import { AuthDialog } from "./AuthDialog";
 import { ThemeToggle } from "./ThemeToggle";
+import { useUser, SignInButton, UserButton } from "@clerk/clerk-react"; 
 
 interface HeaderProps {
   onNavigate: (section: string) => void;
@@ -11,19 +12,15 @@ interface HeaderProps {
 }
 
 export function Header({ onNavigate, onShowVault }: HeaderProps) {
-  const [authOpen, setAuthOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
+
+  // get auth status from clerk
+  const { isSignedIn } = useUser();
 
   const navItems = [
     { label: "Who We Are", section: "about" },
     { label: "What We Do", section: "features" },
     { label: "Our Mission", section: "mission" },
   ];
-
-  const handleAuthClick = (mode: 'login' | 'register') => {
-    setAuthMode(mode);
-    setAuthOpen(true);
-  };
 
   return (
     <>
@@ -40,27 +37,33 @@ export function Header({ onNavigate, onShowVault }: HeaderProps) {
               <SheetTitle>Vault Menu</SheetTitle>
               <SheetDescription>Access your vault and account settings</SheetDescription>
               <div className="flex flex-col space-y-4 mt-8">
-                <Button 
-                  variant="ghost" 
-                  className="justify-start"
-                  onClick={onShowVault}
-                >
-                  My Vault
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  className="justify-start"
-                  onClick={() => handleAuthClick('login')}
-                >
-                  Login
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  className="justify-start"
-                  onClick={() => handleAuthClick('register')}
-                >
-                  Register
-                </Button>
+                {isSignedIn ? (
+                  <>
+                    <Button 
+                      variant="ghost" 
+                      className="justify-start"
+                      onClick={onShowVault}
+                    >
+                      My Vault
+                    </Button>
+                    <div className="px-4 py-2">
+                    
+                    </div>
+                  </>
+                ) : (                     
+                  <>
+                    <SignInButton mode="modal">
+                      <Button variant="ghost" className="justify-start">
+                        Login
+                      </Button>
+                    </SignInButton>
+                    <SignInButton mode="modal">
+                      <Button variant="ghost" className="justify-start">
+                        Register
+                      </Button>
+                    </SignInButton>
+                  </>
+                )}
               </div>
             </SheetContent>
           </Sheet>
@@ -79,16 +82,10 @@ export function Header({ onNavigate, onShowVault }: HeaderProps) {
               </Button>
             ))}
             <ThemeToggle />
+              <UserButton />
           </div>
         </div>
       </header>
-
-      <AuthDialog 
-        open={authOpen} 
-        onOpenChange={setAuthOpen}
-        mode={authMode}
-        onModeChange={setAuthMode}
-      />
     </>
   );
 }

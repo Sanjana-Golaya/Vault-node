@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Button } from "./ui/button";
+import { useUser, SignInButton, SignUpButton } from "@clerk/clerk-react";
 
 const privacyMessages = [
   "value your privacy",
@@ -9,13 +10,12 @@ const privacyMessages = [
   "don't show ads"
 ];
 
-interface HeroSectionProps {
-  onAuthClick: (mode: 'login' | 'register') => void;
-}
 
-export function HeroSection({ onAuthClick }: HeroSectionProps) {
+export function HeroSection() {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [sparkleVariant, setSparkleVariant] = useState(0);
+
+  const { isSignedIn } = useUser();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -60,7 +60,6 @@ export function HeroSection({ onAuthClick }: HeroSectionProps) {
           { x: (Math.random() - 0.5) * 30, y: (Math.random() - 0.5) * 30 }, // ±15px (was ±12px)
           { x: (Math.random() - 0.5) * 35, y: (Math.random() - 0.5) * 35 }, // ±17.5px (was ±14px)
         ],
-        // Only ~35% of dots move in each variant
         shouldAnimate: Math.random() < 0.35,
       });
     }
@@ -132,12 +131,10 @@ export function HeroSection({ onAuthClick }: HeroSectionProps) {
           </h1>
           
           <div className="flex flex-col items-center justify-center mb-12 space-y-4">
-            {/* Part A - Static text */}
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl">
               Your second mind, private to you and only you
             </p>
             
-            {/* Part B - Animated text with static "we" */}
             <div className="h-8 flex items-center justify-center gap-1">
               <span className="text-xl md:text-2xl text-muted-foreground">We </span>
               <AnimatePresence mode="wait">
@@ -154,29 +151,37 @@ export function HeroSection({ onAuthClick }: HeroSectionProps) {
               </AnimatePresence>
             </div>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
-            <Button 
-              size="lg" 
-              className="px-8 py-6 text-lg"
-              onClick={() => onAuthClick('register')}
-            >
-              Get Started
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="px-8 py-6 text-lg"
-              onClick={() => onAuthClick('login')}
-            >
-              Sign In
-            </Button>
-          </motion.div>
+          {/*if the user is not signed in */}
+          { (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            >         
+                <Button 
+                  size="lg" 
+                  className="px-8 py-6 text-lg"
+                >
+                  Get Started
+                </Button>
+                         
+              {!isSignedIn && (
+                 <SignInButton mode="modal">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="px-8 py-6 text-lg"
+                >
+                  Sign In
+                </Button>
+              </SignInButton>
+              )}
+             
+            </motion.div>
+          )}
+        
+          
         </motion.div>
       </div>
 
